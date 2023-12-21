@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Philosopher&display=swap');
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--background-primary);
+  color: var(--color-primary);
+  font-family: 'Philosopher', sans-serif;
+}
+
+section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 2em;
+}

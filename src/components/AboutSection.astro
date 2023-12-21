@@ -4,12 +4,13 @@ import Nav from "@components/Nav.astro";
 
 <style>
   .highlight {
-    color: green;
+    color: var(--color-highlight-secondary);
   }
 </style>
 
 <Nav current="about" />
 <section id="about">
-  <p>I'm playing with Astro.</p>
-  <p>That makes me <span class="highlight">cool</span></p>
+  <p>
+    I'm playing with Astro. That makes me <span class="highlight">cool</span>
+  </p>
 </section>

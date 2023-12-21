@@ -2,20 +2,9 @@
 import Layout from '@layouts/default.astro';
 import Home from '@components/HomeSection.astro';
 import About from '@components/AboutSection.astro'
+import '@styles/vars.css'
+import '@styles/global.css'
 ---
-
-<style>
-  :global(html) {
-    scroll-behavior: smooth;
-  }
-  :global(section) {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    font-size: 2em;
-  }
-</style>
 
 <Layout title="MT | Home">
   <Home />

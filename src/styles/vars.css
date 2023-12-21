@@ -1,3 +1,7 @@
 :root {
-  --color-primary: orange;
+  --color-primary: #faf2ed;
+  --color-highlight-primary: #c87337;
+  --color-highlight-secondary: #38C7BC;
+
+  --background-primary: #091721;
 }
