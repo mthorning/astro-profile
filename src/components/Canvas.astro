@@ -1,104 +1,46 @@
 <style>
-  #cw {
-    position: fixed;
-    z-index: -1;
-  }
-
-  body {
-    margin: 0;
-    padding: 0;
-    background-color: rgba(0, 0, 0, 0.05);
+  canvas {
+    width: 100%;
+    height: 100%;
   }
 </style>
 
 <script>
-  const canvas = document.getElementById("cw") as HTMLCanvasElement
+  const canvas = document.getElementById("cw") as HTMLCanvasElement;
   const context = canvas.getContext("2d");
 
-  if(!context) throw new Error("No context");
+  if (!context) throw new Error("No context");
 
   context.globalAlpha = 0.5;
 
-  const cursor = {
-    x: innerWidth / 2,
-    y: innerHeight / 2,
-  };
-
-  class Particle {
+  class RainDrop {
     x: number;
     y: number;
-    particleTrailWidth: number;
+    gravity: number;
+    rainDropTrailWidth: number;
     strokeColor: string;
-    rotateSpeed: number;
-    theta: number;
-    t: number;
 
-    constructor(
-      x: number,
-      y: number,
-      particleTrailWidth: number,
-      strokeColor: string,
-      rotateSpeed: number,
-    ) {
+    constructor(x: number, rainDropTrailWidth: number, strokeColor: string) {
+      this.y = 0;
       this.x = x;
-      this.y = y;
-      this.particleTrailWidth = particleTrailWidth;
+      this.gravity = Math.random() * 10;
+      this.rainDropTrailWidth = rainDropTrailWidth;
       this.strokeColor = strokeColor;
-      this.theta = Math.random() * Math.PI * 0.1;
-      this.rotateSpeed = rotateSpeed;
-      this.t = Math.random() * 500;
     }
 
-    rotate() {
-      if(!context) throw new Error("No context");
-      const ls = {
-        x: this.x,
-        y: this.y,
-      };
-      this.theta += this.rotateSpeed;
-      this.x = cursor.x + Math.cos(this.theta) * this.t;
-      this.y = cursor.y + Math.sin(this.theta) * this.t;
+    fall() {
+      if (!context) throw new Error("No context");
       context.beginPath();
-      context.lineWidth = this.particleTrailWidth;
+      context.lineWidth = this.rainDropTrailWidth;
       context.strokeStyle = this.strokeColor;
-      context.moveTo(ls.x, ls.y);
+      context.moveTo(this.x, this.y);
+      this.y += this.gravity;
       context.lineTo(this.x, this.y);
       context.stroke();
     }
-  }
 
-  let particlesArray: InstanceType<typeof Particle>[] = [];
-
-  generateParticles(50);
-  setSize();
-  animate();
-
-  /* addEventListener("mousemove", (e) => {
-  cursor.x = e.clientX;
-  cursor.y = e.clientY;
-}); */
-
-  /* addEventListener(
-  "touchmove",
-  (e) => {
-    e.preventDefault();
-    cursor.x = e.touches[0].clientX;
-    cursor.y = e.touches[0].clientY;
-  },
-  { passive: false },
-); */
-
-  addEventListener("resize", () => setSize());
-
-  function generateParticles(amount: number) {
-    for (let i = 0; i < amount; i++) {
-      particlesArray[i] = new Particle(
-        innerWidth / 2,
-        innerHeight / 2,
-        4,
-        generateColor(),
-        0.02,
-      );
+    hasFallen(): boolean {
+      return this.y >= innerHeight;
     }
   }
 
@@ -116,17 +58,52 @@
     canvas.width = innerWidth;
   }
 
+  class Cloud {
+    rainDrops: RainDrop[] = [];
+    fallingDrops: RainDrop[] = [];
+    maxFallingDrops: number;
 
-  function animate() {
-    if(!context) throw new Error("No context");
-    requestAnimationFrame(animate);
+    constructor(initialRainDrops: number, maxFallingDrops: number) {
+      this.maxFallingDrops = maxFallingDrops;
+      for (let i = 0; i < initialRainDrops; i++) {
+        this.addRainDrop();
+      }
+    }
 
-    context.fillStyle = "rgba(0,0,0,0.05)";
-    context.fillRect(0, 0, canvas.width, canvas.height);
+    addRainDrop() {
+      this.rainDrops.push(
+        new RainDrop(Math.random() * innerWidth, 2, generateColor()),
+      );
+    }
 
-    particlesArray.forEach((particle) => particle.rotate());
+    dropRainDrop() {
+      this.fallingDrops.push(this.rainDrops.pop() as RainDrop);
+      this.addRainDrop();
+    }
+
+    rain() {
+      if (!context) throw new Error("No context");
+      setInterval(() => {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        if (this.fallingDrops.length < this.maxFallingDrops) {
+          this.dropRainDrop();
+        }
+
+        this.fallingDrops.forEach((rainDrop, i) => {
+          rainDrop.fall();
+          if (rainDrop.hasFallen()) {
+            this.fallingDrops.splice(i, 1);
+          }
+        });
+      }, 10);
+    }
   }
 
+  setSize();
+  const cloud = new Cloud(500, 350);
+  cloud.rain();
+
+  addEventListener("resize", () => setSize());
 </script>
 
 <canvas id="cw"></canvas>

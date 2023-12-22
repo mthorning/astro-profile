@@ -3,7 +3,17 @@ import Nav from "@components/Nav.astro";
 import Canvas from "@components/Canvas.astro";
 ---
 
+<style>
+  h1 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+</style>
+
 <Nav current="home" />
 <section id="home">
   <Canvas />
+  <h1>Hi, I'm <span class="highlight">Matt</span></h1>
 </section>
