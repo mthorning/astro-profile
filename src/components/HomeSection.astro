@@ -1,19 +1,9 @@
 ---
 import Nav from "@components/Nav.astro";
+import Canvas from "@components/Canvas.astro";
 ---
-
-<style>
-  div {
-  }
-  .highlight {
-    color: var(--color-highlight-primary);
-  }
-</style>
 
 <Nav current="home" />
 <section id="home">
-  <p>
-    Hello, I'm <span class="highlight">Matt Thorning</span>. I'm a software
-    engineer.
-  </p>
+  <Canvas />
 </section>
