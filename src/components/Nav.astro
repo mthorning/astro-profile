@@ -1,17 +1,19 @@
 ---
 interface Props {
-  current: typeof pages[number]
+  current: (typeof pages)[number];
 }
-const { current } = Astro.props
+const { current } = Astro.props;
 
-const pages = ['home', 'about'] as const;
+const pages = ["home", "about", "contact"] as const;
 ---
 
 <style>
   nav {
-    position: fixed;
-    background: #eee;
+    position: sticky;
+    top: 0;
+    background: var(--background-primary);
     padding: 1rem;
+    border-top: 1px solid var(--color-highlight-secondary);
   }
   ul {
     list-style: none;
@@ -23,8 +25,9 @@ const pages = ['home', 'about'] as const;
     margin-right: 1rem;
   }
   a {
-    color: #333;
+    color: var(--color-primary);
     text-decoration: none;
+    text-transform: capitalize;
   }
 
   .current {
@@ -34,8 +37,12 @@ const pages = ['home', 'about'] as const;
 
 <nav>
   <ul>
-    <li class:list={{ current }}>
-      {pages.map(page => <a href={`#${page}`}>{page}</a>)}
-    </li>
+    {
+      pages.map((page) => (
+        <li class:list={{ current }}>
+          <a href={`#${page}`}>{page}</a>
+        </li>
+      ))
+    }
   </ul>
 </nav>

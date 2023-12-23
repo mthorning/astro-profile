@@ -1,9 +1,14 @@
 ---
-import Nav from "@components/Nav.astro";
 import Canvas from "@components/Canvas.astro";
 ---
 
 <style>
+  #toggle-rain {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+ }
+
   a {
     font-size: 1.5rem;
     color: var(--color-primary);
@@ -46,13 +51,13 @@ import Canvas from "@components/Canvas.astro";
   }
 </style>
 
-<Nav current="home" />
 <section id="home">
+  <Canvas />
+  <button id="toggle-rain">Stop rain</button>
   <a id="wet-object" href="#about">
     <span class="link-text">
       Hi, I'm <span class="highlight">Matt</span>
     </span>
     <span class="arrow">&rarr;</span>
   </a>
-    <Canvas />
 </section>

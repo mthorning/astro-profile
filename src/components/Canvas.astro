@@ -8,6 +8,7 @@
 <script>
   window.onload = () => {
     const obj = document.getElementById("wet-object") as HTMLDivElement;
+    const toggleRainBtn = document.getElementById("toggle-rain") as HTMLButtonElement;
     const canvas = document.getElementById("cw") as HTMLCanvasElement;
     const context = canvas.getContext("2d");
     let objCoords: DOMRect;
@@ -98,8 +99,13 @@
       rainDrops: RainDrop[] = [];
       fallingDrops: RainDrop[] = [];
       maxFallingDrops: number;
+      isRaining: boolean = true;
 
       constructor(initialRainDrops: number, maxFallingDrops: number) {
+        toggleRainBtn.addEventListener("click", () => {
+          this.isRaining = !this.isRaining;
+          toggleRainBtn.innerText = this.isRaining ? "Stop rain" : "Start rain";
+        });
         this.maxFallingDrops = maxFallingDrops;
         for (let i = 0; i < initialRainDrops; i++) {
           this.rainDrops.push(
@@ -114,7 +120,7 @@
 
       rain() {
         if (!context) throw new Error("No context");
-        if (this.fallingDrops.length < this.maxFallingDrops) {
+        if (this.fallingDrops.length < this.maxFallingDrops && this.isRaining) {
           this.dropRainDrop();
         }
 
