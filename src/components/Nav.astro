@@ -1,8 +1,11 @@
 ---
-interface Props {
-  current: (typeof pages)[number];
+type Page = (typeof pages)[number];
+
+declare global {
+  interface GlobalEventHandlersEventMap {
+    "nav:set-current-page": CustomEvent<{ page: Page }>;
+  }
 }
-const { current } = Astro.props;
 
 const pages = ["home", "about", "contact"] as const;
 ---
@@ -30,16 +33,32 @@ const pages = ["home", "about", "contact"] as const;
     text-transform: capitalize;
   }
 
-  .current {
-    color: red;
+  .current a {
+    color: var(--color-highlight-primary);
   }
 </style>
 
-<nav>
+<script>
+  class Nav extends HTMLElement {
+    constructor() {
+      super();
+      window.addEventListener("nav:set-current-page", (e) => {
+        this.querySelector(".current")?.classList.remove("current");
+        this.querySelector(`[data-page="${e.detail.page}"]`)?.classList.add(
+          "current",
+        );
+      });
+    }
+  }
+
+  customElements.define("profile-nav", Nav, { extends: "nav" });
+</script>
+
+<nav is="profile-nav">
   <ul>
     {
       pages.map((page) => (
-        <li class:list={{ current }}>
+        <li data-page={page}>
           <a href={`#${page}`}>{page}</a>
         </li>
       ))

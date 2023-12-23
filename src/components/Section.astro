@@ -1,0 +1,45 @@
+---
+interface Props {
+  page: string;
+}
+
+const { page } = Astro.props;
+---
+
+<script>
+  class ProfileSection extends HTMLElement {
+    static observedAttributes = ["id"];
+
+    constructor() {
+      super();
+      this.observePage = this.observePage.bind(this);
+    } 
+  
+    observePage(page) {
+      const options = {
+        rootMargin: "0px",
+        threshold: 0.2,
+      }
+      this.observer = new IntersectionObserver(() => {
+        const event = new CustomEvent("nav:set-current-page", {
+          detail: { page },
+        });
+        window.dispatchEvent(event);
+      }, options);
+
+      this.observer.observe(this);
+    }
+
+    attributeChangedCallback(name, oldValue, newValue) {
+      if(name === "id") {
+        this.observePage(newValue);
+      }
+    }
+  }
+
+  customElements.define("profile-section", ProfileSection, { extends: "section" });
+</script>
+
+<section is="profile-section" id={page}>
+  <slot />
+</section>

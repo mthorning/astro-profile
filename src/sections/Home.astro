@@ -1,5 +1,6 @@
 ---
 import Canvas from "@components/Canvas.astro";
+import Section from "@components/Section.astro";
 ---
 
 <style>
@@ -51,7 +52,7 @@ import Canvas from "@components/Canvas.astro";
   }
 </style>
 
-<section id="home">
+<Section page="home">
   <Canvas />
   <button id="toggle-rain">Stop rain</button>
   <a id="wet-object" href="#about">
@@ -60,4 +61,4 @@ import Canvas from "@components/Canvas.astro";
     </span>
     <span class="arrow">&rarr;</span>
   </a>
-</section>
+</Section>
