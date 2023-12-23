@@ -4,16 +4,55 @@ import Canvas from "@components/Canvas.astro";
 ---
 
 <style>
-  h1 {
+  a {
+    font-size: 1.5rem;
+    color: var(--color-primary);
+    box-sizing: content-box;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    padding: 16px;
+    margin: 0;
+    white-space: nowrap;
+    width: 220px;
+    text-decoration: none;
+    text-align: center;
+    background: rgba(155, 155, 155, 0.1);
+    border-radius: 4px;
+    backdrop-filter: blur(3px);
+    border: 1px solid rgba(231, 231, 231, 0.27);
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+  a:hover {
+    border: 2px solid var(--color-highlight-secondary);
+  }
+
+  .highlight {
+    color: var(--color-highlight-primary);
+  }
+
+  .arrow {
+    color: var(--color-highlight-secondary);
+    font-size: 2rem;
+    align-self: flex-end;
+    transition: transform 0.2s ease-in-out;
+  }
+
+  a:hover .arrow {
+    transform: rotate(90deg);
   }
 </style>
 
 <Nav current="home" />
 <section id="home">
-  <Canvas />
-  <h1>Hi, I'm <span class="highlight">Matt</span></h1>
+  <a id="wet-object" href="#about">
+    <span class="link-text">
+      Hi, I'm <span class="highlight">Matt</span>
+    </span>
+    <span class="arrow">&rarr;</span>
+  </a>
+    <Canvas />
 </section>
