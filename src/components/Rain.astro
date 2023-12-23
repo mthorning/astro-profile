@@ -1,3 +1,11 @@
+---
+declare global {
+  interface GlobalEventHandlersEventMap {
+    "rain:stop": CustomEvent;
+  }
+}
+---
+
 <style>
   canvas {
     width: 100%;
@@ -8,7 +16,6 @@
 <script>
   window.onload = () => {
     const obj = document.getElementById("wet-object") as HTMLDivElement;
-    const toggleRainBtn = document.getElementById("toggle-rain") as HTMLButtonElement;
     const canvas = document.getElementById("cw") as HTMLCanvasElement;
     const context = canvas.getContext("2d");
     let objCoords: DOMRect;
@@ -102,9 +109,11 @@
       isRaining: boolean = true;
 
       constructor(initialRainDrops: number, maxFallingDrops: number) {
-        toggleRainBtn.addEventListener("click", () => {
-          this.isRaining = !this.isRaining;
-          toggleRainBtn.innerText = this.isRaining ? "Stop rain" : "Start rain";
+        window.addEventListener("rain:stop", () => {
+          this.isRaining = false
+        });
+        window.addEventListener("rain:start", () => {
+          this.isRaining = true
         });
         this.maxFallingDrops = maxFallingDrops;
         for (let i = 0; i < initialRainDrops; i++) {

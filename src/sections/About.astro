@@ -3,24 +3,21 @@ import Section from '@components/Section.astro'
 ---
 
 <style>
-  .highlight {
-    color: var(--color-highlight-secondary);
-  }
-  .spacer {
+  .centered {
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
   }
+  .highlight {
+    color: var(--color-highlight-secondary);
+  }
 </style>
 
 <Section page="about">
-  <div class="spacer">
+  <div class="centered">
     <p>
       I don't like this font, it's not <span class="highlight">cool</span>
     </p>
-  </div>
-  <div class="spacer">
-    <p>Temporary space</p>
   </div>
 </Section>

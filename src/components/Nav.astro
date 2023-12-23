@@ -1,6 +1,4 @@
 ---
-type Page = (typeof pages)[number];
-
 declare global {
   interface GlobalEventHandlersEventMap {
     "nav:set-current-page": CustomEvent<{ page: Page }>;
@@ -8,6 +6,8 @@ declare global {
 }
 
 const pages = ["home", "about", "contact"] as const;
+export type Page = (typeof pages)[number];
+
 ---
 
 <style>

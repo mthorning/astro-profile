@@ -1,5 +1,5 @@
 ---
-import Canvas from "@components/Canvas.astro";
+import Rain from "@components/Rain.astro";
 import Section from "@components/Section.astro";
 ---
 
@@ -8,7 +8,7 @@ import Section from "@components/Section.astro";
     position: absolute;
     top: 16px;
     right: 16px;
- }
+  }
 
   a {
     font-size: 1.5rem;
@@ -31,6 +31,7 @@ import Section from "@components/Section.astro";
     display: flex;
     align-items: center;
     justify-content: space-evenly;
+    transition: border 0.3s ease-in-out;
   }
   a:hover {
     border: 2px solid var(--color-highlight-secondary);
@@ -52,9 +53,24 @@ import Section from "@components/Section.astro";
   }
 </style>
 
+<script>
+  const anchor = document.querySelector("#wet-object");
+
+  anchor &&
+    anchor.addEventListener("click", (e) => {
+      e.preventDefault();
+      window.dispatchEvent(new Event("rain:stop"));
+
+      setTimeout(() => {
+        document
+          .querySelector("#about")
+          ?.scrollIntoView({ behavior: "smooth" });
+      }, 500);
+    });
+</script>
+
 <Section page="home">
-  <Canvas />
-  <button id="toggle-rain">Stop rain</button>
+  <Rain />
   <a id="wet-object" href="#about">
     <span class="link-text">
       Hi, I'm <span class="highlight">Matt</span>

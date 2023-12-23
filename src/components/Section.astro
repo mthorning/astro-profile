@@ -1,43 +1,59 @@
 ---
+import type { Page } from "@components/Nav.astro";
+
 interface Props {
-  page: string;
+  page: Page;
 }
 
 const { page } = Astro.props;
 ---
 
 <script>
+  import type { Page } from "@components/Nav.astro";
+
   class ProfileSection extends HTMLElement {
+    observer: IntersectionObserver | null = null;
     static observedAttributes = ["id"];
 
     constructor() {
       super();
-      this.observePage = this.observePage.bind(this);
-    } 
-  
-    observePage(page) {
+    }
+
+    observePage(page: Page) {
       const options = {
-        rootMargin: "0px",
-        threshold: 0.2,
-      }
-      this.observer = new IntersectionObserver(() => {
-        const event = new CustomEvent("nav:set-current-page", {
-          detail: { page },
-        });
-        window.dispatchEvent(event);
+        rootMargin: "10px",
+        threshold: 1,
+      };
+
+      const navSetPage = new CustomEvent("nav:set-current-page", {
+        detail: { page },
+      });
+
+      const rainStart = new CustomEvent("rain:start");
+
+      this.observer = new IntersectionObserver((changes) => {
+        if (changes[0].isIntersecting) {
+          window.dispatchEvent(navSetPage);
+
+          if (page === "home") {
+            window.dispatchEvent(rainStart);
+          }
+        }
       }, options);
 
       this.observer.observe(this);
     }
 
-    attributeChangedCallback(name, oldValue, newValue) {
-      if(name === "id") {
+    attributeChangedCallback(name: "id", oldValue: Page, newValue: Page) {
+      if (name === "id" && oldValue !== newValue) {
         this.observePage(newValue);
       }
     }
   }
 
-  customElements.define("profile-section", ProfileSection, { extends: "section" });
+  customElements.define("profile-section", ProfileSection, {
+    extends: "section",
+  });
 </script>
 
 <section is="profile-section" id={page}>
