@@ -62,10 +62,11 @@ import Section from "@components/Section.astro";
       window.dispatchEvent(new Event("rain:stop"));
 
       setTimeout(() => {
+        // FIXME: use location to update url and push onto history stack
         document
           .querySelector("#about")
           ?.scrollIntoView({ behavior: "smooth" });
-      }, 500);
+      }, 750);
     });
 </script>
 

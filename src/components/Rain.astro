@@ -36,6 +36,10 @@ declare global {
     if (!context) throw new Error("No context");
 
     class RainDrop {
+      // FIXME: need to find a way to define colour vars in one place
+      static baseColour = "#faf2ed";
+      static highlightColours = ["#c87337", "#38c7bc"];
+
       x: number = 0;
       y: number = 0;
       gravity: number = 0;
@@ -79,14 +83,9 @@ declare global {
       }
 
       generateColor(): string {
-        let hexSet = "0123456789ABCDEF";
-        let finalHexString = "#";
-        for (let i = 0; i < 6; i++) {
-          finalHexString += hexSet[Math.ceil(Math.random() * 15)];
-        }
-        return finalHexString;
+        const rnd = Math.floor(Math.random() * 10);
+        return RainDrop.highlightColours[rnd] ?? RainDrop.baseColour;
       }
-
 
       splash(splashY: number) {
         if (!context) throw new Error("No context");
@@ -99,7 +98,6 @@ declare global {
         context.stroke();
         this.hasFallen = true;
       }
-
     }
 
     class Cloud {
@@ -110,16 +108,14 @@ declare global {
 
       constructor(initialRainDrops: number, maxFallingDrops: number) {
         window.addEventListener("rain:stop", () => {
-          this.isRaining = false
+          this.isRaining = false;
         });
         window.addEventListener("rain:start", () => {
-          this.isRaining = true
+          this.isRaining = true;
         });
         this.maxFallingDrops = maxFallingDrops;
         for (let i = 0; i < initialRainDrops; i++) {
-          this.rainDrops.push(
-            new RainDrop(),
-          );
+          this.rainDrops.push(new RainDrop());
         }
       }
 
@@ -149,7 +145,7 @@ declare global {
     setInterval(() => {
       context.clearRect(0, 0, canvas.width, canvas.height);
       cloud.rain();
-    }, 10);
+    }, 15);
   };
 </script>
 

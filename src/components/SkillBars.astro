@@ -1,0 +1,55 @@
+---
+const skills = [
+  { skill: "HTML", level: 4 },
+  { skill: "CSS", level: 4 },
+  { skill: "JavaScript", level: 4 },
+  { skill: "TypeScript", level: 4 },
+  { skill: "Node", level: 3 },
+  { skill: "React", level: 4 },
+  { skill: "PostgreSQL", level: 2 },
+  { skill: "Git", level: 3 },
+  { skill: "Bash", level: 2 },
+  { skill: "Rust", level: 1 },
+  { skill: "Go", level: 2 },
+];
+---
+
+<style>
+  .skills {
+    display: grid;
+    grid-template-columns: min-content repeat(4, 51px);
+    align-items: center;
+    gap: 8px;
+  }
+  .skill-square {
+    grid-column-start: 2;
+    background-color: var(--background-primary);
+    background: linear-gradient(to left, var(--background-primary) 50%, var(--color-highlight-secondary) 50% ) right;
+    height: 100%;
+    border-radius: 4px;
+    background-size: 200%;
+    transition: .5s ease-out;
+  }
+  .color-bg {
+    background-position: left;
+  }
+</style>
+
+<script>
+const squares = Array.from(document.querySelectorAll(".skill-square"));
+
+function addClassName(i) {
+  squares[i].classList.add("color-bg");
+  setTimeout(() => addClassName(i + 1), 200);
+}
+
+addClassName(0);
+  
+</script>
+
+<div class="skills">
+    {skills.map(({ skill, level }, i) => (
+        <p style={`grid-row-start: ${i + 1}`}>{skill}</p>
+        <div class="skill-square" style={`grid-column-end: span ${level}; grid-row-start: ${i + 1}`}/>
+    ))}
+</div>

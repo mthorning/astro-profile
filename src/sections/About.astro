@@ -1,11 +1,13 @@
 ---
 import Section from '@components/Section.astro'
+import SkillBars from '@components/SkillBars.astro'
 ---
 
 <style>
   .centered {
     height: 100vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
   }
@@ -19,5 +21,6 @@ import Section from '@components/Section.astro'
     <p>
       I don't like this font, it's not <span class="highlight">cool</span>
     </p>
+    <SkillBars />
   </div>
 </Section>
