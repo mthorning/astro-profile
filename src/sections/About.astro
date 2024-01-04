@@ -1,26 +1,80 @@
 ---
-import Section from '@components/Section.astro'
-import SkillBars from '@components/SkillBars.astro'
+import Section from "@components/Section.astro";
+import SkillBars from "@components/SkillBars.astro";
 ---
 
 <style>
-  .centered {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  .grid {
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 48px 1fr 1fr;
+    grid-template-areas:
+      "title title"
+      "img text1"
+      "text2 skill";
     align-items: center;
+    justify-items: center;
+    column-gap: 1rem;
+    row-gap: 2rem;
+  }
+  .title {
+    grid-area: title;
+  }
+  .text-1 {
+    grid-area: text1;
+  }
+  .text-2 {
+    grid-area: text2;
+  }
+  .img {
+    grid-area: img;
+  }
+  .skills {
+    grid-area: skill;
+  }
+  p {
+    text-align: justify;
+    max-width: 500px;
+  }
+  h1 {
+    margin-bottom: 3rem;
+    text-decoration: underline;
+    text-decoration-color: var(--color-highlight-secondary);
   }
   .highlight {
     color: var(--color-highlight-secondary);
   }
+  img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+  }
 </style>
 
 <Section page="about">
-  <div class="centered">
-    <p>
-      I don't like this font, it's not <span class="highlight">cool</span>
+  <div class="grid">
+    <h1 class="title">
+      <span class="highlight">About</span>
+    </h1>
+    <p class="text-1">
+      Hey there! I'm Matt, a seasoned front-end developer based in Cornwall,
+      enjoying the vibrant atmosphere of the South West of England. Since 2017,
+      I've been actively contributing to the field of web development. My
+      journey began with Headforwards, where I worked on projects for NTT, a
+      significant player in the tech industry. Currently, I bring my skills and
+      expertise to Ometria, adding value to the dynamic world of front-end
+      development.
     </p>
-    <SkillBars />
+    <img  class="img" src="https://avatars.githubusercontent.com/u/21192068?v=4" />
+    <p class="text-2">
+      Beyond coding, you'll find me strumming the guitar, capturing moments with
+      my camera, and eagerly embracing new learning opportunities. Join me in
+      exploring the lessons learned from diverse languages and discover how my
+      skills can enhance your projects. Let's connect and create something
+      amazing together!
+    </p>
+    <SkillBars  class="skills"/>
   </div>
 </Section>

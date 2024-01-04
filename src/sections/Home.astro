@@ -4,12 +4,6 @@ import Section from "@components/Section.astro";
 ---
 
 <style>
-  #toggle-rain {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-  }
-
   a {
     font-size: 1.5rem;
     color: var(--color-primary);
@@ -18,7 +12,7 @@ import Section from "@components/Section.astro";
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    padding: 16px;
+    padding: 1rem;
     margin: 0;
     white-space: nowrap;
     width: 220px;
@@ -36,20 +30,37 @@ import Section from "@components/Section.astro";
   a:hover {
     border: 2px solid var(--color-highlight-secondary);
   }
-
+  a:hover .arrow {
+    transform: rotate(90deg);
+  }
+  a:after {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 0;
+    top:0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: all 0.5s;
+    box-shadow: 0 0 10px 40px white;
+  }
+  a:active:after {
+    box-shadow: 0 0 0 0 white;
+    position: absolute;
+    left: 0;
+    top:0;
+    opacity: 1;
+    transition: 0s;
+  }
   .highlight {
     color: var(--color-highlight-primary);
   }
-
   .arrow {
     color: var(--color-highlight-secondary);
     font-size: 2rem;
     align-self: flex-end;
     transition: transform 0.2s ease-in-out;
-  }
-
-  a:hover .arrow {
-    transform: rotate(90deg);
   }
 </style>
 
@@ -62,11 +73,13 @@ import Section from "@components/Section.astro";
       window.dispatchEvent(new Event("rain:stop"));
 
       setTimeout(() => {
-        // FIXME: use location to update url and push onto history stack
+        window.location.hash = "#about";
+
+        // need to do this as well in case the hash is already #about
         document
           .querySelector("#about")
           ?.scrollIntoView({ behavior: "smooth" });
-      }, 750);
+      }, 500);
     });
 </script>
 

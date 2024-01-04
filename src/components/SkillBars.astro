@@ -1,17 +1,15 @@
 ---
 const skills = [
-  { skill: "HTML", level: 4 },
-  { skill: "CSS", level: 4 },
-  { skill: "JavaScript", level: 4 },
-  { skill: "TypeScript", level: 4 },
-  { skill: "Node", level: 3 },
-  { skill: "React", level: 4 },
-  { skill: "PostgreSQL", level: 2 },
-  { skill: "Git", level: 3 },
-  { skill: "Bash", level: 2 },
+  { skill: "HTML", level: 6 },
+  { skill: "CSS", level: 6 },
+  { skill: "JavaScript", level: 6 },
+  { skill: "TypeScript", level: 5 },
+  { skill: "Node", level: 4 },
+  { skill: "React", level: 6 },
+  { skill: "PostgreSQL", level: 3 },
   { skill: "Rust", level: 1 },
   { skill: "Go", level: 2 },
-];
+].sort((a, b) => b.level - a.level);
 ---
 
 <style>
@@ -38,9 +36,9 @@ const skills = [
 <script>
 const squares = Array.from(document.querySelectorAll(".skill-square"));
 
-function addClassName(i) {
+function addClassName(i: number) {
   squares[i].classList.add("color-bg");
-  setTimeout(() => addClassName(i + 1), 200);
+  setTimeout(() => i < squares.length - 1 && addClassName(i + 1), 200);
 }
 
 addClassName(0);
