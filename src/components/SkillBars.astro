@@ -1,21 +1,21 @@
 ---
 const skills = [
-  { skill: "HTML", level: 6 },
-  { skill: "CSS", level: 6 },
   { skill: "JavaScript", level: 6 },
-  { skill: "TypeScript", level: 5 },
-  { skill: "Node", level: 4 },
   { skill: "React", level: 6 },
+  { skill: "TypeScript", level: 5 },
+  { skill: "CSS", level: 5 },
+  { skill: "HTML", level: 5 },
+  { skill: "Node", level: 4 },
   { skill: "PostgreSQL", level: 3 },
-  { skill: "Rust", level: 1 },
   { skill: "Go", level: 2 },
-].sort((a, b) => b.level - a.level);
+  { skill: "Rust", level: 1 },
+];
 ---
 
 <style>
   .skills {
     display: grid;
-    grid-template-columns: min-content repeat(4, 51px);
+    grid-template-columns: min-content repeat(6, 51px);
     align-items: center;
     gap: 8px;
   }
